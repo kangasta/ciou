@@ -17,6 +17,7 @@ from ._dynamic import (
 )
 
 bold = _Color(1)
+no_color = _Color(0)
 
 
 def _color_palette():

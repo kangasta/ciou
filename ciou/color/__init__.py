@@ -3,7 +3,13 @@
 
 import re
 
-from ._color import Color, colors, _Color, _build_colors
+from ._color import (
+    Color,
+    colors,
+    _Color,
+    _build_colors,
+    len_without_ansi_escapes,
+)
 # pylint: disable-next=no-name-in-module
 from ._dynamic import (
     fg_black, fg_red, fg_green, fg_yellow,

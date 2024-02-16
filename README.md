@@ -17,7 +17,7 @@ autopep8 -aaar --in-place ciou
 Run static analysis with:
 
 ```bash
-pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou
+pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou tst
 ```
 
 Run unit tests with command:

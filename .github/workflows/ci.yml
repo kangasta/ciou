@@ -34,7 +34,7 @@ jobs:
     - name: Run static analysis and unittests
       run: |
         pycodestyle ciou
-        pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou
+        pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou tst
         coverage run --branch --source ciou/ -m unittest discover -s tst/
         coverage report -m
     # - name: Push coverage

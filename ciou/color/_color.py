@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from typing import Callable
 from functools import reduce
 import re
 
@@ -10,7 +10,9 @@ class _Color:
         self._ansi_code = ansi_code
 
     def __call__(self, text: str):
-        return f'\033[{self._ansi_code}m{text}\033[0m' if self._ansi_code else text
+        if self._ansi_code:
+            return f'\033[{self._ansi_code}m{text}\033[0m'
+        return text
 
 
 def colors(*colors: Color) -> Color:

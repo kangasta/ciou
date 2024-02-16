@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Build results
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode

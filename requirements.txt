@@ -1,0 +1,11 @@
+.
+
+# Formatting
+autopep8
+pycodestyle
+
+# Static analysis
+pylint
+
+# Unittest
+coverage

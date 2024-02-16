@@ -1,5 +1,8 @@
 # CLI input and output utils (ciou)
 
+[![CI](https://github.com/kangasta/ciou/actions/workflows/ci.yml/badge.svg)](https://github.com/kangasta/ciou/actions/workflows/ci.yml)
+[![Release](https://github.com/kangasta/ciou/actions/workflows/release.yml/badge.svg)](https://github.com/kangasta/ciou/actions/workflows/release.yml)
+
 Utilities for working with inputs and outputs of command-line interfaces.
 
 ## Testing

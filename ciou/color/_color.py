@@ -33,6 +33,11 @@ def _build_colors():
 def colors(*colors: Color) -> Color:
     def color(text: str) -> str:
         text = reduce(lambda c, i: i(c), colors, text)
-        return re.sub("(\033\\[0m)+", "\033[0m", text)
+        return re.sub(r"(\033\[0m)+", "\033[0m", text)
 
     return color
+
+
+def len_without_ansi_escapes(input: str) -> int:
+    input_without_ansi_escapes = re.sub(r"(\033\[[0-9;]+m)", "", input)
+    return len(input_without_ansi_escapes)

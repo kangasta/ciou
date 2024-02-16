@@ -1,8 +1,4 @@
 import os
-import yaml
-
-from jinja2.exceptions import UndefinedError
-
 from unittest import TestCase
 
 from ciou.color import bold, colors, fg_red, fg_green, _color_palette

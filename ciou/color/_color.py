@@ -15,6 +15,21 @@ class _Color:
         return text
 
 
+def _build_colors():
+    type_ = dict(fg=30, bg=40, fg_hi=90, bg_hi=100)
+    color = dict(
+        black=0, red=1, green=2, yellow=3,
+        blue=4, magenta=5, cyan=6, white=7
+    )
+
+    return {
+        f"{type_key}_{color_key}": _Color(
+            type_value +
+            color_value) for type_key,
+        type_value in type_.items() for color_key,
+        color_value in color.items()}
+
+
 def colors(*colors: Color) -> Color:
     def color(text: str) -> str:
         text = reduce(lambda c, i: i(c), colors, text)

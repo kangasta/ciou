@@ -3,24 +3,20 @@
 
 import re
 
-from ._color import Color, _Color, colors
+from ._color import Color, colors, _Color, _build_colors
+# pylint: disable-next=no-name-in-module
+from ._dynamic import (
+    fg_black, fg_red, fg_green, fg_yellow,
+    fg_blue, fg_magenta, fg_cyan, fg_white,
+    bg_black, bg_red, bg_green, bg_yellow,
+    bg_blue, bg_magenta, bg_cyan, bg_white,
+    fg_hi_black, fg_hi_red, fg_hi_green, fg_hi_yellow,
+    fg_hi_blue, fg_hi_magenta, fg_hi_cyan, fg_hi_white,
+    bg_hi_black, bg_hi_red, bg_hi_green, bg_hi_yellow,
+    bg_hi_blue, bg_hi_magenta, bg_hi_cyan, bg_hi_white
+)
 
 bold = _Color(1)
-
-
-def _build_colors():
-    type_ = dict(fg=30, bg=40, fg_hi=90, bg_hi=100)
-    color = dict(
-        black=0, red=1, green=2, yellow=3,
-        blue=4, magenta=5, cyan=6, white=7
-    )
-
-    return {
-        f"{type_key}_{color_key}": _Color(
-            type_value +
-            color_value) for type_key,
-        type_value in type_.items() for color_key,
-        color_value in color.items()}
 
 
 def _color_palette():
@@ -41,6 +37,3 @@ def _color_palette():
         output += "\n"
 
     return output[:-1]
-
-
-globals().update(_build_colors())

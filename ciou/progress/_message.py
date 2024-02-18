@@ -18,7 +18,7 @@ class MessageStatus(Enum):
 
     @property
     def in_progress(self):
-        return self._status == MessageStatus.STARTED
+        return self._status == MessageStatus.STARTED.value
 
     @property
     def finished(self):
@@ -35,7 +35,7 @@ class MessageStatus(Enum):
 class Update:
     key: InitVar[Optional[str]] = None
     message: Optional[str] = None
-    status: MessageStatus
+    status: MessageStatus = None
     progress_message: Optional[str] = None
     details: Optional[str] = None
 
@@ -61,7 +61,7 @@ class Message:
         if update.status != MessageStatus.PENDING and not self.started:
             self.started = datetime.utcnow()
 
-        if update.status.finished:
+        if update.status and update.status.finished:
             self.finished = datetime.utcnow()
 
             if not self.started:

@@ -2,7 +2,8 @@ from datetime import datetime
 from time import sleep
 from unittest import TestCase
 
-from ciou.progress import MessageStatus, MessageStore, Update
+from ciou.progress import MessageStatus, Update
+from ciou.progress._message import MessageStore
 
 class UpdateTest(TestCase):
     def test_key(self):
@@ -14,6 +15,10 @@ class MessageStatusTest(TestCase):
     def test_finished(self):
         status = MessageStatus.SUCCESS
         self.assertTrue(status.finished)
+
+    def test_in_progress(self):
+        status = MessageStatus.STARTED
+        self.assertTrue(status.in_progress)
 
 
 class MessageStoreTest(TestCase):
@@ -28,7 +33,7 @@ class MessageStoreTest(TestCase):
         self.assertEqual(len(store.in_progress), 2)
         self.assertEqual(store.in_progress[0].message, "1st")
         self.assertEqual(store.in_progress[1].message, "2nd")
-        
+
         store.push(Update(message="2nd", status=MessageStatus.SUCCESS))
 
         self.assertEqual(len(store.finished), 1)

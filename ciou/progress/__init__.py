@@ -3,13 +3,14 @@
 Python implementation of UpCloudLtd/progress.
 '''
 
-from ._messages import (
-    Message,
-    MessageStatus,
-    MessageStore,
-    Update,
-)
-
 from ._config import (
     OutputConfig,
 )
+
+from ._message import (
+    Message,
+    MessageStatus,
+    Update,
+)
+
+from ._progress import Progress

@@ -11,7 +11,7 @@ from ciou.terminal import (
     is_unicode_safe_windows_term_program,
 )
 
-from ._messages import MessageStatus, Message
+from ._message import MessageStatus, Message
 
 
 def default_status_indicator_map():
@@ -203,6 +203,6 @@ class OutputConfig:
 
         details = ""
         if msg.details and msg.status.finished:
-            details = self.format_details(msg)
+            details = self.get_details_color()(self.format_details(msg))
 
         return f'{status}{message}{elapsed}{details}\n'

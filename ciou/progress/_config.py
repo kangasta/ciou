@@ -62,7 +62,7 @@ def elapsed_string(elapsed_seconds: float) -> str:
     return f"{int(elapsed_seconds):3} s"
 
 
-@dataclass(kw_only=True)
+@dataclass()
 class OutputConfig:
     default_text_width: int = 100
     disable_colors: bool = False

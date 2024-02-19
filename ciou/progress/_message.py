@@ -31,7 +31,7 @@ class MessageStatus(Enum):
         )
 
 
-@dataclass(kw_only=True)
+@dataclass()
 class Update:
     key: InitVar[Optional[str]] = None
     message: Optional[str] = None
@@ -43,7 +43,7 @@ class Update:
         self.key = key if key else self.message
 
 
-@dataclass(kw_only=True)
+@dataclass()
 class Message:
     key: Optional[str] = None
     message: Optional[str] = None

@@ -4,6 +4,8 @@ from unittest import TestCase
 
 from ciou.progress import MessageStatus, Message, OutputConfig
 
+from tst.snapshot import snapshot, rewind_and_read
+
 DETAILS_WITH_NEWLINES = '''Output:
 
 + echo 'Details with newlines are assumed to be preformatted. Thus, newline characters should not be replaced with other whitespace when wrapping the text.'
@@ -14,45 +16,36 @@ LONG_MESSAGE = '''The  message  should be truncated to fit a single row.
 \tAll whitespace characters are replaced with spaces.
 '''
 
-EXPECTED_STARTED = "\x1b[34m> \x1b[0mTesting                                                                                     \x1b[90m  10 s\x1b[0m\n"
-EXPECTED_LONG_MESSAGE = "\x1b[33m! \x1b[0mThe  message  should be truncated to fit a single row.  All whitespace characters are repla…\x1b[90m  10 s\x1b[0m\n"
-EXPECTED_WITH_DETAILS = '''\x1b[32m✓ \x1b[0m\x1b[32mTesting                                                                                     \x1b[0m\x1b[90m 123 s\x1b[0m\x1b[90m
-  Output:
-
-  + echo 'Details with newlines are assumed to be preformatted. Thus, newline characters should not
-  be replaced with other whitespace when wrapping the text.'
-  Details with newlines are assumed to be preformatted. Thus, newline characters should not be
-  replaced with other whitespace when wrapping the text.
-  + cat not-found
-  cat: not-found: No such file or directory\x1b[0m
-'''
-
 class OutputConfigTest(TestCase):
     maxDiff = None
 
     def test_get_message_text(self):
         testdata = [
             (
+                'started',
                 OutputConfig(target=StringIO()),
                 Message(key="test", message="Testing", status=MessageStatus.STARTED, started=datetime.utcnow() - timedelta(seconds=10)),
-                EXPECTED_STARTED,
             ),
             (
+                'started',
                 OutputConfig(target=StringIO()),
                 Message(key="test", message="Testing", status=MessageStatus.STARTED, started=datetime.utcnow() - timedelta(seconds=10), details=DETAILS_WITH_NEWLINES),
-                EXPECTED_STARTED,
             ),
             (
+                'long_message',
                 OutputConfig(target=StringIO()),
                 Message(key="test", message=LONG_MESSAGE, status=MessageStatus.WARNING, started=datetime.utcnow() - timedelta(seconds=10)),
-                EXPECTED_LONG_MESSAGE,
             ),
             (
+                'with_details',
                 OutputConfig(color_message=True, target=StringIO()),
                 Message(key="test", message="Testing", details=DETAILS_WITH_NEWLINES, status=MessageStatus.SUCCESS, started=datetime.utcnow() - timedelta(seconds=123), finished=datetime.utcnow()),
-                EXPECTED_WITH_DETAILS,
             ),
         ]
 
-        for config, message, expected in testdata:
-            self.assertEqual(config.get_message_text(message, 1), expected)
+        for test, config, message in testdata:
+            with self.subTest(test):
+                actual = config.get_message_text(message, 1)
+                expected = snapshot(__file__, f'test_get_message_text_{test}', config.get_message_text(message, 1))
+
+                self.assertEqual(actual, expected)

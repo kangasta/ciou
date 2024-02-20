@@ -40,10 +40,10 @@ class MessageRenderer:
         for msg in in_progress:
             if not msg.status.in_progress:
                 continue
-            if self._config.max_height == 0:
+            if self._config.max_height <= 1:
                 text += self._prepare_message(msg, msg.message, "started")
             else:
-                if count > self._config.max_height:
+                if (count + 1) >= self._config.max_height:
                     break
                 text += self._config.get_message_text(
                     msg, self._animation_index)

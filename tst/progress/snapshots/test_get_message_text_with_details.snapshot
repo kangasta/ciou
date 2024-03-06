@@ -1,0 +1,9 @@
+[32m✓ [0m[32mTesting                                                                                     [0m[90m 123 s[0m[90m
+  Output:
+
+  + echo 'Details with newlines are assumed to be preformatted. Thus, newline characters should not
+  be replaced with other whitespace when wrapping the text.'
+  Details with newlines are assumed to be preformatted. Thus, newline characters should not be
+  replaced with other whitespace when wrapping the text.
+  + cat not-found
+  cat: not-found: No such file or directory[0m

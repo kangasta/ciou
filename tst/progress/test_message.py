@@ -4,6 +4,7 @@ from unittest import TestCase
 
 from ciou.progress import MessageStatus, Update
 from ciou.progress._message import MessageStore
+from ciou.time import utcnow
 
 class UpdateTest(TestCase):
     def test_key(self):
@@ -49,7 +50,7 @@ class MessageStoreTest(TestCase):
         self.assertIsNone(msg.started)
         self.assertIsNone(msg.finished)
 
-        tic = datetime.utcnow()
+        tic = utcnow()
         store.push(Update(key="test", message="Still testing", status=MessageStatus.STARTED))
 
         self.assertEqual(msg.message, "Still testing")
@@ -57,7 +58,7 @@ class MessageStoreTest(TestCase):
         self.assertGreater(msg.started, tic)
         self.assertIsNone(msg.finished)
 
-        toc = datetime.utcnow()
+        toc = utcnow()
         store.push(Update(key="test", message="Still testing", status=MessageStatus.ERROR, details="Test details"))
 
         self.assertEqual(msg.message, "Still testing")

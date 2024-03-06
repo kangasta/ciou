@@ -3,6 +3,7 @@ from io import StringIO
 from unittest import TestCase
 
 from ciou.progress import MessageStatus, Message, OutputConfig
+from ciou.time import utcnow
 
 from tst.snapshot import snapshot, rewind_and_read
 
@@ -24,22 +25,22 @@ class OutputConfigTest(TestCase):
             (
                 'started',
                 OutputConfig(target=StringIO()),
-                Message(key="test", message="Testing", status=MessageStatus.STARTED, started=datetime.utcnow() - timedelta(seconds=10)),
+                Message(key="test", message="Testing", status=MessageStatus.STARTED, started=utcnow() - timedelta(seconds=10)),
             ),
             (
                 'started',
                 OutputConfig(target=StringIO()),
-                Message(key="test", message="Testing", status=MessageStatus.STARTED, started=datetime.utcnow() - timedelta(seconds=10), details=DETAILS_WITH_NEWLINES),
+                Message(key="test", message="Testing", status=MessageStatus.STARTED, started=utcnow() - timedelta(seconds=10), details=DETAILS_WITH_NEWLINES),
             ),
             (
                 'long_message',
                 OutputConfig(target=StringIO()),
-                Message(key="test", message=LONG_MESSAGE, status=MessageStatus.WARNING, started=datetime.utcnow() - timedelta(seconds=10)),
+                Message(key="test", message=LONG_MESSAGE, status=MessageStatus.WARNING, started=utcnow() - timedelta(seconds=10)),
             ),
             (
                 'with_details',
                 OutputConfig(color_message=True, target=StringIO()),
-                Message(key="test", message="Testing", details=DETAILS_WITH_NEWLINES, status=MessageStatus.SUCCESS, started=datetime.utcnow() - timedelta(seconds=123), finished=datetime.utcnow()),
+                Message(key="test", message="Testing", details=DETAILS_WITH_NEWLINES, status=MessageStatus.SUCCESS, started=utcnow() - timedelta(seconds=123), finished=utcnow()),
             ),
         ]
 

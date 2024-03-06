@@ -3,6 +3,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional
 
+from ciou.time import utcnow
+
 
 class MessageStatus(Enum):
     PENDING = "pending"
@@ -56,16 +58,16 @@ class Message:
 
     def update(self, update: Update):
         if not self.created:
-            self.created = datetime.utcnow()
+            self.created = utcnow()
 
         if update.status != MessageStatus.PENDING and not self.started:
-            self.started = datetime.utcnow()
+            self.started = utcnow()
 
         if update.status and update.status.finished:
-            self.finished = datetime.utcnow()
+            self.finished = utcnow()
 
             if not self.started:
-                self.started = datetime.utcnow()
+                self.started = utcnow()
 
         if not self.key:
             self.key = update.key
@@ -102,7 +104,7 @@ class Message:
         if not self.started:
             return 0
 
-        end = self.finished if self.finished else datetime.utcnow()
+        end = self.finished if self.finished else utcnow()
         return (end - self.started).total_seconds()
 
 

@@ -1,2 +1,2 @@
 from ._ticker import Ticker
-from ._timestamp import timestamp
+from ._timestamp import timestamp, utcnow

@@ -15,6 +15,8 @@ STOP = "_stop"
 
 
 class Progress:
+    '''The main interface of the `ciou.progress` module.
+    '''
     def __init__(self, config: OutputConfig = None):
         if not config:
             config = OutputConfig()
@@ -40,6 +42,8 @@ class Progress:
                 self._renderer.render(self._store)
 
     def start(self):
+        '''Start the rendering loop on a new thread.
+        '''
         self._thread = Thread(
             target=self._run
         )
@@ -49,9 +53,14 @@ class Progress:
         self._ticker.start()
 
     def push(self, update: Update):
+        '''Push `Update` to the progress log.
+        '''
         self._queue.put(update)
 
     def stop(self):
+        '''Stop the rendering loop after rendering the final state of the
+        progress log.
+        '''
         self._ticker.stop()
 
         self._queue.put(STOP)
@@ -62,6 +71,14 @@ class Progress:
 
     @contextmanager
     def task(self, message, key=None):
+        '''Helper for automatically pushing updates to the progress log.
+
+        For example:
+
+        ```python
+        .. include:: ../../examples/progress_contextmanager.py
+        ```
+        '''
         if not key:
             key = f'message-{uuid4()}'
 

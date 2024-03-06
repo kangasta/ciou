@@ -1,6 +1,7 @@
 '''Library for outputting progress logs to stdout and stderr.
 
-Python implementation of [UpCloudLtd / progress](https://github.com/UpCloudLtd/progress).
+Python implementation of
+[UpCloudLtd / progress](https://github.com/UpCloudLtd/progress).
 '''
 
 from ._config import (

@@ -15,7 +15,8 @@ def _color(ansi_code: int = None, name=None):
         fn.__name__ = name
         fn.__doc__ = f"""Color the given *text* with `{name}` color.
 
-Adds ANSI escapes to the beginning and the end of the text. E.g. `{name}` would become `{fn(name)}`
+Adds ANSI escapes to the beginning and the end of the text. E.g. `{name}`
+would become `{fn(name)}`.
 """
 
     return fn
@@ -49,7 +50,8 @@ def colors(*colors: _Color) -> _Color:
 def len_without_ansi_escapes(input: str) -> int:
     '''Calculate the length of a string without ANSI escapes.
 
-    For example, `len_without_ansi_escapes(bold("example"))` returns `7` while `len(bold("example"))` returns `15`.
+    For example, `len_without_ansi_escapes(bold("example"))` returns `7` while
+    `len(bold("example"))` returns `15`.
     '''
     input_without_ansi_escapes = re.sub(r"(\033\[[0-9;]+m)", "", input)
     return len(input_without_ansi_escapes)

@@ -1,6 +1,6 @@
 '''Library for outputting progress logs to stdout and stderr.
 
-Python implementation of UpCloudLtd/progress.
+Python implementation of [UpCloudLtd / progress](https://github.com/UpCloudLtd/progress).
 '''
 
 from ._config import (
@@ -14,3 +14,5 @@ from ._message import (
 )
 
 from ._progress import Progress
+
+__all__ = ["Progress", "OutputConfig", "Message", "MessageStatus", "Update"]

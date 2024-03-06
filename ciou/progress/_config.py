@@ -103,16 +103,24 @@ class OutputConfig:
         return color
 
     def get_status_color(self, status: MessageStatus):
+        '''Return the color to use for status indicator.
+        '''
         color = self.status_color_map.get(status, self.unknown_color)
         return self._get_color(color)
 
     def get_details_color(self):
+        '''Return the color to use for message details.
+        '''
         return self._get_color(self.details_color)
 
     def get_stop_watch_color(self):
+        '''Return the color to use for stopwatch.
+        '''
         return self._get_color(self.stop_watch_color)
 
     def get_status_indicator(self, status: MessageStatus):
+        '''Return the status indicator for given status.
+        '''
         indicator = self.status_indicator_map.get(
             status, self.unknown_indicator)
 
@@ -122,6 +130,11 @@ class OutputConfig:
         return indicator
 
     def get_in_progress_animation_frame(self, index: int):
+        '''Return the in-progress animation frame.
+
+        Args:
+            index: Animation render index that will be used as a basis for calculating (`index % len(animation)`) the current frame.
+        '''
         animation = self.in_progress_animation
 
         if self.fallback:
@@ -131,6 +144,11 @@ class OutputConfig:
         return animation[i]
 
     def get_dimensions(self) -> os.terminal_size:
+        '''Returns the dimensions of the target terminal.
+
+        See `max_width` and `max_height` for default values in case that
+        determining terminal dimension failed.
+        '''
         try:
             i = self.target.fileno()
             return os.get_terminal_size(i)
@@ -139,7 +157,7 @@ class OutputConfig:
 
     @property
     def max_width(self) -> int:
-        '''GetMaxWidth returns target terminals width
+        '''Returns target terminals width.
 
         If determining terminal dimensions failed, returns default value from
         OutputConfig.
@@ -148,13 +166,13 @@ class OutputConfig:
 
     @property
     def max_height(self):
-        '''GetMaxHeight returns target terminals height
+        '''Returns target terminals height.
 
         If determining terminal dimensions failed, returns zero.
         '''
         return self.get_dimensions().lines
 
-    def format_details(self, msg: Message) -> str:
+    def _format_details(self, msg: Message) -> str:
         indent = {}
         if self.show_status_indicator:
             indent = dict(initial_indent='  ', subsequent_indent='  ')
@@ -170,6 +188,8 @@ class OutputConfig:
         ) for line in lines)
 
     def get_message_text(self, msg: Message, i: int) -> str:
+        '''Build message text based on this configuration.
+        '''
         status = ""
         status_color = self.get_status_color(msg.status)
         if self.show_status_indicator:

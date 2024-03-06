@@ -12,3 +12,6 @@ dist/
 
 # IDE
 .vscode
+
+# Generated documentation
+docs/

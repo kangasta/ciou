@@ -10,3 +10,6 @@ pylint
 # Unittest
 coverage
 freezegun
+
+# Docs
+pdoc

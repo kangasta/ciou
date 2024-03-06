@@ -1,13 +1,13 @@
-'''Library for coloring text with ANSI escapes
+'''Library for coloring text with ANSI escapes.
 '''
 
 import re
 
 from ._color import (
-    Color,
-    colors,
-    _Color,
     _build_colors,
+    _color,
+    _Color,
+    colors,
     len_without_ansi_escapes,
 )
 # pylint: disable-next=no-name-in-module
@@ -19,14 +19,24 @@ from ._dynamic import (
     fg_hi_black, fg_hi_red, fg_hi_green, fg_hi_yellow,
     fg_hi_blue, fg_hi_magenta, fg_hi_cyan, fg_hi_white,
     bg_hi_black, bg_hi_red, bg_hi_green, bg_hi_yellow,
-    bg_hi_blue, bg_hi_magenta, bg_hi_cyan, bg_hi_white
+    bg_hi_blue, bg_hi_magenta, bg_hi_cyan, bg_hi_white,
+    names,
 )
 
-bold = _Color(1)
-no_color = _Color(0)
+Color = _Color
+'''Type for color functions.'''
+
+bold = _color(1, "bold")
+no_color = _color(0)
+no_color.__doc__ = """No-operation color function.
+
+Returns the *text* parameter without any modifications.
+"""
 
 
-def _color_palette():
+def color_palette():
+    '''Create a string that demonstrates all available colors.
+    '''
     _colors = _build_colors()
 
     def _text(key: str):
@@ -44,3 +54,13 @@ def _color_palette():
         output += "\n"
 
     return output[:-1]
+
+
+__all__ = [
+    "Color",
+    "colors",
+    "len_without_ansi_escapes",
+    "bold",
+    "no_color",
+    *names,
+    "color_palette"]

@@ -3,6 +3,8 @@
 [![CI](https://github.com/kangasta/ciou/actions/workflows/ci.yml/badge.svg)](https://github.com/kangasta/ciou/actions/workflows/ci.yml)
 [![Docs](https://github.com/kangasta/ciou/actions/workflows/docs.yml/badge.svg)](https://github.com/kangasta/ciou/actions/workflows/docs.yml)
 [![Release](https://github.com/kangasta/ciou/actions/workflows/release.yml/badge.svg)](https://github.com/kangasta/ciou/actions/workflows/release.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b1f0abcbbb4d64f8b683/maintainability)](https://codeclimate.com/github/kangasta/ciou/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b1f0abcbbb4d64f8b683/test_coverage)](https://codeclimate.com/github/kangasta/ciou/test_coverage)
 
 Utilities for working with inputs and outputs of command-line interfaces.
 

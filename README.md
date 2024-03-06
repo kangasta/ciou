@@ -9,26 +9,32 @@ Utilities for working with inputs and outputs of command-line interfaces.
 
 Check and automatically fix formatting with:
 
-```bash
+```sh
 pycodestyle ciou
 autopep8 -aaar --in-place ciou
 ```
 
 Run static analysis with:
 
-```bash
+```sh
 pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou tst
 ```
 
 Run unit tests with command:
 
-```bash
+```sh
 python3 -m unittest discover -s tst/
 ```
 
 Get test coverage with commands:
 
-```bash
+```sh
 coverage run --branch --source ciou/ -m unittest discover -s tst/
 coverage report -m
+```
+
+Generate the documentation with:
+
+```sh
+pdoc -d google -o docs ./ciou
 ```

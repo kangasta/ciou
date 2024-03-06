@@ -3,6 +3,7 @@ from io import StringIO
 from unittest import TestCase
 
 from ciou.progress import MessageStatus, Message, OutputConfig
+from ciou.progress._renderer import MessageRenderer
 from ciou.time import utcnow
 
 from tst.snapshot import snapshot, rewind_and_read
@@ -46,7 +47,8 @@ class OutputConfigTest(TestCase):
 
         for test, config, message in testdata:
             with self.subTest(test):
-                actual = config.get_message_text(message, 1)
-                expected = snapshot(__file__, f'test_get_message_text_{test}', config.get_message_text(message, 1))
+                renderer = MessageRenderer(config)
+                actual = renderer.render_message(message)
+                expected = snapshot(__file__, f'test_get_message_text_{test}', actual)
 
                 self.assertEqual(actual, expected)

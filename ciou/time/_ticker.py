@@ -5,7 +5,16 @@ from ._timestamp import timestamp
 
 
 class Ticker:
-    def __init__(self, interval: int, queue: Queue):
+    '''Ticker pushes timestamps to a queue at given interval.
+    '''
+
+    def __init__(self, interval: float, queue: Queue):
+        '''Initialize the ticker.
+
+        Args:
+            interval: interval of the ticks in seconds.
+            queue: queue where to push the timestamp strings.
+        '''
         self._interval = interval
         self._queue = queue
 
@@ -17,6 +26,8 @@ class Ticker:
             self._queue.put(timestamp())
 
     def start(self):
+        '''Start the ticker.
+        '''
         self._thread = Thread(
             target=self._run
         )
@@ -24,6 +35,8 @@ class Ticker:
         self._thread.start()
 
     def stop(self):
+        '''Stop the ticker.
+        '''
         self._stop_event.set()
         if self._thread:
             self._thread.join()

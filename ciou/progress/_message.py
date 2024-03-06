@@ -8,12 +8,19 @@ from ciou.time import utcnow
 
 class MessageStatus(Enum):
     PENDING = "pending"
+    '''Message has not been started yet.'''
     STARTED = "started"
+    '''Message has been started and is thus in-progress.'''
     SUCCESS = "success"
+    '''Message has been finished successfully.'''
     WARNING = "warning"
+    '''Message has been finished with warning.'''
     ERROR = "error"
+    '''Message has been finished with error.'''
     SKIPPED = "skipped"
+    '''Message was finished without it reaching in-progress state.'''
     UNKNOWN = "unknown"
+    '''Message was finished while it was in-progress.'''
 
     def __init__(self, status):
         self._status = status

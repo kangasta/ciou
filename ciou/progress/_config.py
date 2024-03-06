@@ -1,8 +1,6 @@
 from dataclasses import dataclass, field
 import os
-import re
 from sys import stderr
-import textwrap
 from typing import Dict, TextIO, List
 
 from ciou import color
@@ -52,42 +50,56 @@ def default_fallback_in_progress_animation():
     return ["/", "-", "\\", "|"]
 
 
-def elapsed_string(elapsed_seconds: float) -> str:
-    if elapsed_seconds < 1:
-        return ""
-
-    if elapsed_seconds >= 999:
-        return "> 999 s"
-
-    return f"{int(elapsed_seconds):3} s"
-
-
 @dataclass()
 class OutputConfig:
     default_text_width: int = 100
+    '''Fallback value for terminal width in case determining terminal size
+    fails.'''
     disable_colors: bool = False
+    '''Do not render colors regardless of other color related configuration
+    options.'''
     force_colors: bool = False
+    '''Render colors even if user has `NO_COLOR` environment variable set.
+    Overrides `disable_colors`.'''
     show_status_indicator: bool = True
+    '''Show status indicator before the message.'''
     status_indicator_map: Dict[MessageStatus, str] = field(
         default_factory=default_status_indicator_map)
+    '''Maps `MessageStatus` to a status indicator.'''
     fallback_status_indicator_map: Dict[MessageStatus, str] = field(
         default_factory=default_fallback_status_indicator_map)
+    '''Overrides indicators defined in `status_indicator_map` when `fallback`
+    returns `True`.'''
     status_color_map: Dict[MessageStatus, color.Color] = field(
         default_factory=default_status_color_map)
+    '''Maps `MessageStatus` to a color.'''
     in_progress_animation: List[str] = field(
         default_factory=default_in_progress_animation)
+    '''Animation frames for in-progress animation.'''
     fallback_in_progress_animation: List[str] = field(
         default_factory=default_fallback_in_progress_animation)
+    '''Overrides frames defined in `in_progress_animation` when `fallback`
+    returns `True`..'''
     unknown_color: color.Color = color.fg_white
+    '''Color to use for unknown message status.'''
     unknown_indicator: str = "?"
+    '''Indicator to use for unknown message status.'''
     details_color: color.Color = color.fg_hi_black
+    '''Color to use for message details.'''
     color_message: bool = False
+    '''Render message text with status color.'''
     stop_watch_color: color.Color = color.fg_hi_black
+    '''Color to use for stopwatch.'''
     show_stopwatch: bool = True
+    '''Render the task duration after message.'''
     target: TextIO = stderr
+    '''Target file where to render the messages. By default `stderr`.'''
 
     @property
     def fallback(self):
+        '''Returns `True` if current terminal is a Windows terminal that is
+        not likely capable of rendering unicode characters.
+        '''
         if is_windows_terminal and not is_unicode_safe_windows_term_program:
             return True
 
@@ -103,16 +115,24 @@ class OutputConfig:
         return color
 
     def get_status_color(self, status: MessageStatus):
+        '''Return the color to use for status indicator.
+        '''
         color = self.status_color_map.get(status, self.unknown_color)
         return self._get_color(color)
 
     def get_details_color(self):
+        '''Return the color to use for message details.
+        '''
         return self._get_color(self.details_color)
 
     def get_stop_watch_color(self):
+        '''Return the color to use for stopwatch.
+        '''
         return self._get_color(self.stop_watch_color)
 
     def get_status_indicator(self, status: MessageStatus):
+        '''Return the status indicator for given status.
+        '''
         indicator = self.status_indicator_map.get(
             status, self.unknown_indicator)
 
@@ -122,6 +142,12 @@ class OutputConfig:
         return indicator
 
     def get_in_progress_animation_frame(self, index: int):
+        '''Return the in-progress animation frame.
+
+        Args:
+            index: Animation render index that will be used as a basis for
+                calculating the current frame: `index % len(animation)`.
+        '''
         animation = self.in_progress_animation
 
         if self.fallback:
@@ -131,6 +157,11 @@ class OutputConfig:
         return animation[i]
 
     def get_dimensions(self) -> os.terminal_size:
+        '''Returns the dimensions of the target terminal.
+
+        See `max_width` and `max_height` for default values in case that
+        determining terminal dimension failed.
+        '''
         try:
             i = self.target.fileno()
             return os.get_terminal_size(i)
@@ -139,7 +170,7 @@ class OutputConfig:
 
     @property
     def max_width(self) -> int:
-        '''GetMaxWidth returns target terminals width
+        '''Returns target terminals width.
 
         If determining terminal dimensions failed, returns default value from
         OutputConfig.
@@ -148,61 +179,8 @@ class OutputConfig:
 
     @property
     def max_height(self):
-        '''GetMaxHeight returns target terminals height
+        '''Returns target terminals height.
 
         If determining terminal dimensions failed, returns zero.
         '''
         return self.get_dimensions().lines
-
-    def format_details(self, msg: Message) -> str:
-        indent = {}
-        if self.show_status_indicator:
-            indent = dict(initial_indent='  ', subsequent_indent='  ')
-
-        whitespace = {}
-        if "\n" in msg.details:
-            whitespace = dict(expand_tabs=False, replace_whitespace=False)
-
-        lines = msg.details.splitlines()
-
-        return "\n" + "\n".join(textwrap.fill(
-            line, width=self.max_width, **whitespace, **indent,
-        ) for line in lines)
-
-    def get_message_text(self, msg: Message, i: int) -> str:
-        status = ""
-        status_color = self.get_status_color(msg.status)
-        if self.show_status_indicator:
-            indicator = self.get_status_indicator(msg.status)
-            if msg.status.in_progress and self.max_height > 0:
-                indicator = self.get_in_progress_animation_frame(i)
-
-            status = status_color(f'{indicator} ')
-
-        elapsed = elapsed_string(msg.elapsed_seconds)
-        if elapsed:
-            elapsed = self.get_stop_watch_color()(f' {elapsed}')
-
-        len_fn = color.len_without_ansi_escapes
-        message = msg.message
-        if msg.progress_message:
-            message += f" {msg.progress_message}"
-
-        max_message_width = self.max_width - len_fn(status) - len_fn(elapsed)
-        if max_message_width < 0:
-            return ""
-
-        message = re.sub(r"\s", " ", message)
-        if len(message) > max_message_width:
-            message = f'{message[:max_message_width-1]}…'
-        else:
-            message = message.ljust(max_message_width)
-
-        if self.color_message:
-            message = status_color(message)
-
-        details = ""
-        if msg.details and msg.status.finished:
-            details = self.get_details_color()(self.format_details(msg))
-
-        return f'{status}{message}{elapsed}{details}\n'

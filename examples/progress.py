@@ -39,5 +39,4 @@ sleep(3)
 p.push(Update(key="long", status=MessageStatus.WARNING))
 sleep(3)
 
-
 p.stop()

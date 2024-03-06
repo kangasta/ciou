@@ -3,3 +3,5 @@ from ._windows import (
     is_windows_terminal,
     is_unicode_safe_windows_term_program,
 )
+
+__all__ = ["is_windows_terminal", "is_unicode_safe_windows_term_program"]

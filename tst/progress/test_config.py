@@ -4,9 +4,8 @@ from unittest import TestCase
 
 from ciou.progress import MessageStatus, Message, OutputConfig
 from ciou.progress._renderer import MessageRenderer
+from ciou.snapshot import snapshot
 from ciou.time import utcnow
-
-from tst.snapshot import snapshot, rewind_and_read
 
 DETAILS_WITH_NEWLINES = '''Output:
 
@@ -49,6 +48,6 @@ class OutputConfigTest(TestCase):
             with self.subTest(test):
                 renderer = MessageRenderer(config)
                 actual = renderer.render_message(message)
-                expected = snapshot(__file__, f'test_get_message_text_{test}', actual)
+                expected = snapshot(f'test_get_message_text_{test}', actual)
 
                 self.assertEqual(actual, expected)

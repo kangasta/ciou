@@ -48,6 +48,5 @@ class OutputConfigTest(TestCase):
             with self.subTest(test):
                 renderer = MessageRenderer(config)
                 actual = renderer.render_message(message)
-                expected = snapshot(f'test_get_message_text_{test}', actual)
-
-                self.assertEqual(actual, expected)
+                self.assertEqual(
+                    *snapshot(f'test_get_message_text_{test}', actual))

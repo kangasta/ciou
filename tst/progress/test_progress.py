@@ -34,4 +34,4 @@ class ProgressTest(TestCase):
 
                 p.stop()
                 actual = rewind_and_read(target)
-                self.assertEqual(actual, snapshot(f'test_context_manager_{status}', actual))
+                self.assertEqual(*snapshot(f'test_context_manager_{status}', actual))

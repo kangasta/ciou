@@ -14,6 +14,12 @@ from ._message import (
     Update,
 )
 
-from ._progress import Progress
+from ._progress import Checks, Progress
 
-__all__ = ["Progress", "OutputConfig", "Message", "MessageStatus", "Update"]
+__all__ = [
+    "Progress",
+    "Checks",
+    "OutputConfig",
+    "Message",
+    "MessageStatus",
+    "Update"]

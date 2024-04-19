@@ -101,4 +101,4 @@ def snapshot(key: str,
             f.write(value)
             return value, value
 
-    return value, prev
+    return prev, value

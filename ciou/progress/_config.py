@@ -55,6 +55,8 @@ class OutputConfig:
     default_text_width: int = 100
     '''Fallback value for terminal width in case determining terminal size
     fails.'''
+    disable_animation: bool = False
+    '''Print started message instead of a progress spinner.'''
     disable_colors: bool = False
     '''Do not render colors regardless of other color related configuration
     options.'''
@@ -105,14 +107,20 @@ class OutputConfig:
 
         return False
 
-    def _get_color(self, color: color.Color):
+    @property
+    def show_animation(self):
+        '''Returns `True` if target is TTY and animation is not disabled.
+        '''
+        return self.max_height > 0 and not self.disable_animation
+
+    def _get_color(self, color_: color.Color):
         if self.force_colors:
-            return color
+            return color_
 
         if self.disable_colors or os.getenv("NO_COLOR"):
             return color.no_color
 
-        return color
+        return color_
 
     def get_status_color(self, status: MessageStatus):
         '''Return the color to use for status indicator.

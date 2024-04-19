@@ -66,3 +66,9 @@ class MessageStoreTest(TestCase):
         self.assertGreater(msg.started, tic)
         self.assertGreater(toc, msg.started)
         self.assertGreater(msg.finished, toc)
+
+    def test_push_finished_message(self):
+        store = MessageStore()
+
+        store.push(Update(key="skipped", message="Testing skipped", status=MessageStatus.SKIPPED))
+        store.push(Update(key="success", message="Testing success", status=MessageStatus.SUCCESS))

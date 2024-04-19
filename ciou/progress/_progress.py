@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from io import StringIO
 from queue import Queue
 from threading import Thread
 from uuid import uuid4
@@ -103,3 +104,34 @@ class Progress:
                     key=key,
                     status=MessageStatus.ERROR,
                     details=str(error)))
+
+
+class Checks:
+    '''Helper class for writing progress logs to a StringIO output without
+    animations or threading.'''
+
+    def __init__(self, config: OutputConfig = None):
+        if not config:
+            config = OutputConfig()
+
+        self._target = StringIO()
+        config.target = self._target
+
+        self._renderer = MessageRenderer(config)
+        self._store = MessageStore()
+
+    def push(self, update: Update):
+        '''Push `Update` to the checks log.
+        '''
+        self._store.push(update)
+
+    def close(self):
+        '''Close the proress log. Finishes in-progress messages.
+        '''
+        self._store.close()
+
+    def getvalue(self) -> str:
+        '''Return the progess log content.
+        '''
+        self._renderer.render(self._store)
+        return self._target.getvalue()

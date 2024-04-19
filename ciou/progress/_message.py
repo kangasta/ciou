@@ -122,7 +122,8 @@ class MessageStore:
 
     def _store(self, message: Message):
         if message.status.finished:
-            del self._in_progress[message.key]
+            if message.key in self._in_progress:
+                del self._in_progress[message.key]
             self._finished.append(message)
         else:
             self._in_progress[message.key] = message

@@ -53,7 +53,7 @@ class MessageRenderer:
         status_color = self._config.get_status_color(msg.status)
         if self._config.show_status_indicator:
             indicator = self._config.get_status_indicator(msg.status)
-            if msg.status.in_progress and self._config.max_height > 0:
+            if msg.status.in_progress and self._config.show_animation:
                 indicator = self._config.get_in_progress_animation_frame(
                     self._animation_index)
 
@@ -113,7 +113,7 @@ class MessageRenderer:
         for msg in in_progress:
             if not msg.status.in_progress:
                 continue
-            if self._config.max_height <= 1:
+            if not self._config.show_animation:
                 text += self._prepare_message(msg, msg.message, "started")
             else:
                 if (count + 1) >= self._config.max_height:

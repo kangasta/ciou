@@ -113,14 +113,14 @@ class OutputConfig:
         '''
         return self.max_height > 0 and not self.disable_animation
 
-    def _get_color(self, color: color.Color):
+    def _get_color(self, color_: color.Color):
         if self.force_colors:
-            return color
+            return color_
 
         if self.disable_colors or os.getenv("NO_COLOR"):
             return color.no_color
 
-        return color
+        return color_
 
     def get_status_color(self, status: MessageStatus):
         '''Return the color to use for status indicator.

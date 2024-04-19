@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from io import StringIO
 from unittest import TestCase
 
+from ciou.color import fg_green
 from ciou.progress import MessageStatus, Message, OutputConfig
 from ciou.progress._renderer import MessageRenderer
 from ciou.snapshot import snapshot
@@ -19,6 +20,15 @@ LONG_MESSAGE = '''The  message  should be truncated to fit a single row.
 
 class OutputConfigTest(TestCase):
     maxDiff = None
+
+    def test_get_status_color(self):
+        c = OutputConfig()
+        color = c.get_status_color(MessageStatus.SUCCESS)
+        self.assertEqual(fg_green('text'), color('text'))
+
+        c = OutputConfig(disable_colors=True)
+        color = c.get_status_color(MessageStatus.SUCCESS)
+        self.assertEqual('text', color('text'))
 
     def test_get_message_text(self):
         testdata = [

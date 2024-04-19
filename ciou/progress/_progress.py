@@ -17,6 +17,7 @@ STOP = "_stop"
 class Progress:
     '''The main interface of the `ciou.progress` module.
     '''
+
     def __init__(self, config: OutputConfig = None):
         if not config:
             config = OutputConfig()

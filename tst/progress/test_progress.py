@@ -2,8 +2,7 @@ from io import StringIO
 from unittest import TestCase
 
 from ciou.progress import OutputConfig, Progress
-
-from tst.snapshot import snapshot, rewind_and_read
+from ciou.snapshot import snapshot, rewind_and_read
 
 def noop():
     pass
@@ -35,4 +34,4 @@ class ProgressTest(TestCase):
 
                 p.stop()
                 actual = rewind_and_read(target)
-                self.assertEqual(actual, snapshot(__file__, f'test_context_manager_{status}', actual))
+                self.assertEqual(*snapshot(f'test_context_manager_{status}', actual))

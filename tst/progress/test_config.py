@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from io import StringIO
 from unittest import TestCase
 

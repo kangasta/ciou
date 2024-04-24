@@ -8,6 +8,9 @@ import re
 from typing import List, Pattern, Tuple, Union
 
 
+from ciou.types import ensure_list
+
+
 def rewind_and_read(f: IOBase) -> str:
     '''Move cursor to the beginning of the file and read file content.
 
@@ -15,16 +18,6 @@ def rewind_and_read(f: IOBase) -> str:
     '''
     f.seek(0)
     return f.read()
-
-
-def _ensure_list(value):
-    if value is None:
-        return []
-
-    if isinstance(value, list):
-        return value
-
-    return [value]
 
 
 REPLACE_DURATION = (r'[0-9]+\.[0-9]+.*s', '<DURATION>')
@@ -79,7 +72,7 @@ def snapshot(key: str,
     if not testfile:
         testfile = inspect.getsourcefile(inspect.stack()[1].frame)
 
-    replaces = _ensure_list(replace)
+    replaces = ensure_list(replace)
     for r in replaces:
         pattern, repl = r
         value = re.sub(pattern, repl, value)

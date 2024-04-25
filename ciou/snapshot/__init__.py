@@ -3,7 +3,7 @@
 
 import inspect
 from io import IOBase
-from os import getcwd, getenv, makedirs, path
+import os
 import re
 from typing import List, Pattern, Tuple, Union
 
@@ -20,7 +20,7 @@ def rewind_and_read(f: IOBase) -> str:
     return f.read()
 
 
-REPLACE_CWD = (getcwd(), '<CWD>')
+REPLACE_CWD = (re.escape(os.getcwd()), '<CWD>')
 '''Replace tuple for `snapshot` to remove dynamic durations from snapshots.
 For example, `0.673 ms` → `<DURATION>`'''
 REPLACE_DURATION = (r'[0-9]+\.[0-9]+.*s', '<DURATION>')
@@ -80,8 +80,8 @@ def snapshot(key: str,
         pattern, repl = r
         value = re.sub(pattern, repl, value)
 
-    filepath = path.join(
-        path.dirname(testfile),
+    filepath = os.path.join(
+        os.path.dirname(testfile),
         directory_name,
         f'{key}.snapshot')
 
@@ -91,8 +91,8 @@ def snapshot(key: str,
     except FileNotFoundError:
         prev = None
 
-    if getenv("UPDATE_SNAPSHOTS") or prev is None:
-        makedirs(path.dirname(filepath), exist_ok=True)
+    if os.getenv("UPDATE_SNAPSHOTS") or prev is None:
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
         with open(filepath, "w+") as f:
             f.write(value)
             return value, value

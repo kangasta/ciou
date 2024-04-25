@@ -3,7 +3,7 @@
 
 import inspect
 from io import IOBase
-from os import getenv, makedirs, path
+from os import getcwd, getenv, makedirs, path
 import re
 from typing import List, Pattern, Tuple, Union
 
@@ -20,6 +20,9 @@ def rewind_and_read(f: IOBase) -> str:
     return f.read()
 
 
+REPLACE_CWD = (getcwd(), '<CWD>')
+'''Replace tuple for `snapshot` to remove dynamic durations from snapshots.
+For example, `0.673 ms` → `<DURATION>`'''
 REPLACE_DURATION = (r'[0-9]+\.[0-9]+.*s', '<DURATION>')
 '''Replace tuple for `snapshot` to remove dynamic durations from snapshots.
 For example, `0.673 ms` → `<DURATION>`'''

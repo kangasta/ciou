@@ -27,7 +27,9 @@ class MessageStoreTest(TestCase):
         store = MessageStore()
 
         store.push(Update(message="2nd", status=MessageStatus.PENDING))
+        sleep(25e-3)
         store.push(Update(message="1st", status=MessageStatus.STARTED))
+        sleep(25e-3)
         store.push(Update(message="2nd", status=MessageStatus.STARTED))
 
         self.assertEqual(len(store.finished), 0)
@@ -44,6 +46,7 @@ class MessageStoreTest(TestCase):
         store = MessageStore()
 
         store.push(Update(key="test", message="Testing", status=MessageStatus.PENDING))
+        sleep(25e-3)
 
         msg = store.in_progress[0]
         self.assertEqual(msg.message, "Testing")
@@ -51,7 +54,9 @@ class MessageStoreTest(TestCase):
         self.assertIsNone(msg.finished)
 
         tic = utcnow()
+        sleep(25e-3)
         store.push(Update(key="test", message="Still testing", status=MessageStatus.STARTED))
+        sleep(25e-3)
 
         self.assertEqual(msg.message, "Still testing")
         self.assertIsNone(msg.details)
@@ -59,6 +64,7 @@ class MessageStoreTest(TestCase):
         self.assertIsNone(msg.finished)
 
         toc = utcnow()
+        sleep(25e-3)
         store.push(Update(key="test", message="Still testing", status=MessageStatus.ERROR, details="Test details"))
 
         self.assertEqual(msg.message, "Still testing")

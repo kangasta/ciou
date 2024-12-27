@@ -22,6 +22,7 @@ dependencies = []
 [project.urls]
 Homepage = "https://github.com/kangasta/ciou"
 Repository = "https://github.com/kangasta/ciou.git"
+Documentation = "https://kangasta.github.io/yaml_requests/"
 
 [tool.setuptools.packages.find]
 include = ["ciou*"]

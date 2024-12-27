@@ -40,12 +40,14 @@ REPLACE_UUID = (
 _Replace = Tuple[Pattern, str]
 
 
-def snapshot(key: str,
-             value: str,
-             directory_name: str = 'snapshots',
-             testfile: str = None,
-             replace: Union[_Replace, List[_Replace]] = None
-             ) -> Tuple[str, str]:
+def snapshot(
+        key: str,
+        value: str,
+        directory_name: str = 'snapshots',
+        testfile: str = None,
+        replace: Union[_Replace, List[_Replace]] = None,
+        encoding: str = 'utf-8',
+        ) -> Tuple[str, str]:
     '''Testing utility that returns `value` after applying `replace`s and the
     value of the snapshot:
 
@@ -65,6 +67,7 @@ def snapshot(key: str,
         into the directory where testfile is located in.
       replace: replace patterns, for example durations or UUIDs, in value with
         given placeholders.
+      encoding: encoding to use when reading and writing the snapshot file.
 
     For example:
 
@@ -86,14 +89,14 @@ def snapshot(key: str,
         f'{key}.snapshot')
 
     try:
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding=encoding) as f:
             prev = f.read()
     except FileNotFoundError:
         prev = None
 
     if os.getenv("UPDATE_SNAPSHOTS") or prev is None:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        with open(filepath, "w+") as f:
+        with open(filepath, "w+", encoding=encoding) as f:
             f.write(value)
             return value, value
 

@@ -15,11 +15,11 @@ jobs:
         - windows-latest
         - ubuntu-latest
         python-version:
-        - "3.8"
         - "3.9"
         - "3.10"
         - "3.11"
         - "3.12"
+        - "3.13"
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -29,12 +29,19 @@ jobs:
       run: |
         pip install -r requirements.txt
         python3 -c "import ciou; print(ciou.__version__)"
-    - name: Run static analysis and unittests
+    - name: Run static analysis
       run: |
         pycodestyle ciou
         pylint -E --enable=invalid-name,unused-import,useless-object-inheritance ciou tst
+    - name: Run unittests with coverage
+      run: |
         coverage run --branch --source ciou/ -m unittest discover -s tst/
         coverage report -m
+      if: matrix.os != 'windows-latest'
+    - name: Run unittests
+      run: |
+        python3 -m unittest discover -s tst/
+      if: matrix.os == 'windows-latest'
     - name: Push coverage
       uses: paambaati/codeclimate-action@v2.7.5
       with:

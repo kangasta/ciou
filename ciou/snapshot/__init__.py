@@ -21,8 +21,8 @@ def rewind_and_read(f: IOBase) -> str:
 
 
 REPLACE_CWD = (re.escape(os.getcwd()), '<CWD>')
-'''Replace tuple for `snapshot` to remove dynamic durations from snapshots.
-For example, `0.673 ms` → `<DURATION>`'''
+'''Replace tuple for `snapshot` to remove current working directory from
+snapshots. For example, `/home/user/file.txt` → `<CWD>/file.txt`'''
 REPLACE_DURATION = (r'[0-9]+\.[0-9]+.*s', '<DURATION>')
 '''Replace tuple for `snapshot` to remove dynamic durations from snapshots.
 For example, `0.673 ms` → `<DURATION>`'''

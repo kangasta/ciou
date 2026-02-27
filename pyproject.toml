@@ -10,7 +10,7 @@ authors = [
 ]
 description = "CLI input and output utils."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = {file = "LICENSE"}
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -22,7 +22,7 @@ dependencies = []
 [project.urls]
 Homepage = "https://github.com/kangasta/ciou"
 Repository = "https://github.com/kangasta/ciou.git"
-Documentation = "https://kangasta.github.io/yaml_requests/"
+Documentation = "https://kangasta.github.io/ciou/"
 
 [tool.setuptools.packages.find]
 include = ["ciou*"]

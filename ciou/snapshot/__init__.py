@@ -47,7 +47,7 @@ def snapshot(
         testfile: str = None,
         replace: Union[_Replace, List[_Replace]] = None,
         encoding: str = 'utf-8',
-        ) -> Tuple[str, str]:
+) -> Tuple[str, str]:
     '''Testing utility that returns `value` after applying `replace`s and the
     value of the snapshot:
 

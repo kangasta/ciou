@@ -75,7 +75,7 @@ class MessageRenderer:
 
         message = re.sub(r"\s", " ", message)
         if len(message) > max_message_width:
-            message = f'{message[:max_message_width-1]}…'
+            message = f'{message[:max_message_width - 1]}…'
         else:
             message = message.ljust(max_message_width)
 

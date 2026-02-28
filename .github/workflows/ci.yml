@@ -21,8 +21,8 @@ jobs:
         - "3.13"
         - "3.14"
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -42,12 +42,12 @@ jobs:
       run: |
         python3 -m unittest discover -s tst/
       if: matrix.os == 'windows-latest'
-    - name: Push coverage
-      uses: paambaati/codeclimate-action@v2.7.5
-      with:
-        coverageCommand: coverage xml
-        coverageLocations: |
-          ${{github.workspace}}/coverage.xml:coverage.py
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.10' && github.ref == 'refs/heads/main'
+    # - name: Push coverage
+    #   uses: paambaati/codeclimate-action@7bcf9e73c0ee77d178e72c0ec69f1a99c1afc1f3 # v2.7.5
+    #   with:
+    #     coverageCommand: coverage xml
+    #     coverageLocations: |
+    #       ${{github.workspace}}/coverage.xml:coverage.py
+    #   env:
+    #     CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
+    #   if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.10' && github.ref == 'refs/heads/main'

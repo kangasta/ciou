@@ -1,5 +1,4 @@
 from freezegun import freeze_time
-import os
 from queue import Queue
 from time import sleep
 from unittest import TestCase

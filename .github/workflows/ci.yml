@@ -38,11 +38,11 @@ jobs:
       run: |
         coverage run --branch --source ciou/ -m unittest discover -s tst/
         coverage report -m
-      if: matrix.os != 'windows-latest'
+      if: matrix.os == 'ubuntu-latest'
     - name: Run unittests
       run: |
         python3 -m unittest discover -s tst/
-      if: matrix.os == 'windows-latest'
+      if: matrix.os != 'ubuntu-latest'
     # - name: Push coverage
     #   uses: paambaati/codeclimate-action@7bcf9e73c0ee77d178e72c0ec69f1a99c1afc1f3 # v2.7.5
     #   with:

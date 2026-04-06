@@ -1,0 +1,12 @@
+[
+  {
+    "stream": "stdin",
+    "text": "echo 'Hello, world!'",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "Hello, world!",
+    "timestamp": "<TIMESTAMP>"
+  }
+]

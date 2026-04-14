@@ -1,0 +1,62 @@
+[
+  {
+    "stream": "stdin",
+    "text": "sh -ec '\necho \"Counting to 10\"\nfor i in $(seq 1 10); do\n  echo \"$i\"\ndone\n'",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "Counting to 10",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "1",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "2",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "3",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "4",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "5",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "6",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "7",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "8",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "9",
+    "timestamp": "<TIMESTAMP>"
+  },
+  {
+    "stream": "stdout",
+    "text": "10",
+    "timestamp": "<TIMESTAMP>"
+  }
+]

@@ -3,9 +3,10 @@
 
 import inspect
 from io import IOBase
+import json
 import os
 import re
-from typing import List, Pattern, Tuple, Union
+from typing import Any, List, Pattern, Tuple, Union
 
 
 from ciou.types import ensure_list
@@ -101,3 +102,17 @@ def snapshot(
             return value, value
 
     return prev, value
+
+
+def json_snapshot(
+        key: str,
+        data: Any,
+        **kwargs
+) -> Tuple[str, str]:
+    '''Like `snapshot`, but converts `data` to JSON string with `json.dumps`
+    before writing to snapshot and comparing with existing snapshot.
+    '''
+    if not kwargs.get("testfile"):
+        kwargs["testfile"] = inspect.getsourcefile(inspect.stack()[1].frame)
+
+    return snapshot(key, json.dumps(data, indent=2, sort_keys=True), **kwargs)

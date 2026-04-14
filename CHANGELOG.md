@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0]
+
 ### Added
 
 - Add `dt` arg to `timestamp` function.
+- Add `streams` module for capturing console output with stream and timestamp information when using `subprocess`.
 
 ## [0.7.0]
 
@@ -23,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use `utf-8` encoding by default when reading and writing snapshot files.
 
-[Unreleased]: https://github.com/kangasta/ciou/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/kangasta/ciou/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/kangasta/ciou/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/kangasta/ciou/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/kangasta/ciou/compare/v0.6.0...v0.6.1
